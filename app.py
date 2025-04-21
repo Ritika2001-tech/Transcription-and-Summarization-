@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import httpx
 import os
 import logging
+import uvicorn
 from dotenv import load_dotenv
 
 # Set up logging
@@ -17,7 +18,7 @@ app = FastAPI()
 # Allow frontend to access backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # in production, specify allowed origins
+    allow_origins=["*"],  
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -26,7 +27,14 @@ app.add_middleware(
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 if not OPENROUTER_API_KEY:
     raise ValueError("OPENROUTER_API_KEY not found in .env file!")
+else:
+    logger.info("OPENROUTER_API_KEY successfully loaded.")
 
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the Summarization API"}
+
+# Summarization endpoint
 @app.post("/summarize")
 async def summarize(request: Request):
     data = await request.json()
@@ -44,7 +52,7 @@ async def summarize(request: Request):
     }
 
     payload = {
-        "model": "mistralai/mixtral-8x7b-instruct",  # free + powerful
+        "model": "mistralai/mixtral-8x7b-instruct",  
         "messages": [
             {"role": "system", "content": "You are a helpful summarization assistant."},
             {"role": "user", "content": prompt}
@@ -54,7 +62,7 @@ async def summarize(request: Request):
     try:
         async with httpx.AsyncClient() as client:
             response = await client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload)
-            response.raise_for_status()  # Will raise an HTTPError if the status code is 4xx/5xx
+            response.raise_for_status()  
 
             result = response.json()
 
