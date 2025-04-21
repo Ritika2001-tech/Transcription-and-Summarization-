@@ -166,7 +166,7 @@
             }
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/summarize', {
+                const response = await fetch('https://transcription-and-summarization-backend.onrender.com', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ text: transcriptionBox.value })
