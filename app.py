@@ -4,6 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 import httpx
 import uvicorn
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -15,7 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OPENROUTER_API_KEY = "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"  
+# Load API Key securely
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+if not OPENROUTER_API_KEY:
+    raise ValueError("OPENROUTER_API_KEY not found in .env file!")
 
 @app.post("/summarize")
 async def summarize(request: Request):
