@@ -1,5 +1,9 @@
 # Transcription and Summarization Tool
 
+
+## Deployment Video
+Watch the deployment and working demo here: [YouTube Video](https://youtu.be/obwbImrRkAI)
+
 A web application that records audio, transcribes it to text on the client side, sends it to a backend for summarization, and displays both the raw transcription and a refined summary.
 
 ## Features
@@ -9,9 +13,9 @@ A web application that records audio, transcribes it to text on the client side,
 - **Real-Time Display**: Displays both the raw transcription and the refined summary.
 
 ## Technologies Used
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: HTML
 - **Backend**: FastAPI (Python)
 - **LLM**: OpenRouter API for summarization
-- **Audio Recording**: Web Audio API (JavaScript)
+- **Audio Recording**: Web Audio API 
 
 
